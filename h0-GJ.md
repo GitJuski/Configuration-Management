@@ -13,6 +13,6 @@ Hello reader!
       print(greeting)
       x += 1
 
-![----------Hi there!----------](https://github.com/GitJuski/Linux-servers)
+[----------Hi there!----------](https://github.com/GitJuski/Linux-servers)
 
 ```print('Hi There!')```
