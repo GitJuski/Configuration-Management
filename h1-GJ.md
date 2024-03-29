@@ -112,7 +112,7 @@ I was done at 7:34 PM.
 
 I started doing this task at 7:45 PM.
 
-First, I opened my notes of my brief salt experimentations.
+First, I opened my notes of my brief salt experimentations. I used Karvinen (2018) & (March 27, 2024), ChatGPT and (saltproject s.a) as references when creating these notes.
 
 ![1](/screenshots/1/9.png)
 
@@ -302,6 +302,8 @@ Once I was done with everything, I exited the machine with exit and destroyed th
 
 # References
 
+ChatGPT. Questions asked on March 27, 2024.
+
 Hashicorp s.a. Halt. Available at https://developer.hashicorp.com/vagrant/docs/cli/halt. Read on March 28, 2024.
 
 Hashicorp s.a. Resume. Available at https://developer.hashicorp.com/vagrant/docs/cli/resume. Read on March 29, 2024.
@@ -313,8 +315,6 @@ Karvinen, T 2021. Run Salt Command Locally. Available at https://terokarvinen.co
 Karvinen, T 2023. Create a Web Page Using Github. Available at https://terokarvinen.com/2023/create-a-web-page-using-github/. Read on March 29, 2024.
 
 Karvinen, T 2006. Raportin kirjoittaminen. Available at https://terokarvinen.com/2006/06/04/raportin-kirjoittaminen-4/. Read on March 29, 2024.
-
-Karvinen, T 2018. Salt Quickstart – Salt Stack Master and Slave on Ubuntu Linux. Available at https://terokarvinen.com/2018/salt-quickstart-salt-stack-master-and-slave-on-ubuntu-linux/?fromSearch=salt. Read on March 28, 2024.
 
 Karvinen, T 2018. Salt States – I Want My Computers Like This. Available at https://terokarvinen.com/2018/salt-states-i-want-my-computers-like-this/?fromSearch=salt. Read on March 28, 2024.
 
