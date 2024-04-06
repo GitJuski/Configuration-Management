@@ -1,0 +1,81 @@
+Question: Miten laitan uuden Apache konfiguraation päälle ja vanhan pois saltstackissa. laitanko vaan cmd.run a2ensite?
+
+Answer: Kyllä, voit käyttää cmd.run -moduulia aktivoimaan uuden Apache-konfiguraation ja poistamaan vanhan käytöstä. Tavallisesti a2ensite- ja a2dissite-komentoja käytetään tässä yhteydessä. a2ensite -komennolla aktivoit uuden virtualhostin, ja a2dissite -komennolla poistat vanhan virtualhostin käytöstä.
+
+Tässä on esimerkki siitä, miten voit käyttää cmd.run -moduulia näiden komentojen suorittamiseen SaltStackissa:
+
+enable_new_virtualhost:
+  cmd.run:
+    - name: a2ensite newsite.conf
+    - cwd: /etc/apache2/sites-available/
+    - require:
+      - file: configure_new_virtualhost
+
+disable_old_virtualhost:
+  cmd.run:
+    - name: a2dissite oldsite.conf
+    - cwd: /etc/apache2/sites-available/
+    - onlyif: ls /etc/apache2/sites-enabled/oldsite.conf
+
+Tässä esimerkissä:
+
+    enable_new_virtualhost: Käynnistää uuden virtualhostin käytön a2ensite -komennolla. require-parametrilla varmistetaan, että uusi konfiguraatio on asetettu ennen kuin se otetaan käyttöön.
+    disable_old_virtualhost: Poistaa vanhan virtualhostin käytöstä a2dissite -komennolla. onlyif-parametrilla tarkistetaan, onko vanha konfiguraatio jo aktiivinen ennen sen poistamista.
+
+Varmista, että komentojen polut ja tiedostonimet vastaavat järjestelmääsi, ja että oletettu käyttöoikeus on määritetty oikein. Lisäksi varmista, että käytössäsi on tarvittavat oikeudet suorittaa näitä komentoja Apache-konfiguraation hallintaan.
+
+---------------------------------
+
+Question: Onko parempaa keinoa?
+
+Answer: Toinen tapa hallita Apache-konfiguraatioita SaltStackissa on käyttää file.symlink -moduulia luomaan symbolinen linkki sites-enabled -hakemistoon uuden virtualhostin kansioon ja poistaa symbolinen linkki vanhasta virtualhostista. Tämä lähestymistapa on vähemmän hauras, koska se käsittelee tiedostojen linkitystä suoraan eikä luota ulkoiseen komentoon.
+
+Tässä on esimerkki siitä, miten voit käyttää file.symlink -moduulia tämän tekemiseen:
+
+enable_new_virtualhost:
+  file.symlink:
+    - name: /etc/apache2/sites-enabled/newsite.conf
+    - target: /etc/apache2/sites-available/newsite.conf
+    - force: True
+    - require:
+      - file: configure_new_virtualhost
+
+disable_old_virtualhost:
+  file.absent:
+    - name: /etc/apache2/sites-enabled/oldsite.conf
+    - require:
+      - file: enable_new_virtualhost
+
+
+Tässä esimerkissä:
+
+    enable_new_virtualhost: Luo symbolisen linkin uuteen virtualhostiin sites-enabled -hakemistoon. require-parametrilla varmistetaan, että uusi konfiguraatio on asetettu ennen kuin se otetaan käyttöön.
+    disable_old_virtualhost: Poistaa symbolisen linkin vanhasta virtualhostista sites-enabled -hakemistosta. require-parametrilla varmistetaan, että uusi konfiguraatio on asetettu ennen kuin vanha poistetaan.
+
+Tämä lähestymistapa on vähemmän riippuvainen ulkoisista komentorivikomentoista ja voi olla luotettavampi ja helpommin hallittavissa.
+
+-------------------------------------------------------------------
+
+Question: Voinko uudelleen käynnistää apachen daemonin servicellä?
+
+Answer: Kyllä, voit käynnistää Apache-daemonin uudelleen SaltStackissa käyttämällä service.running -moduulia. Tämä on yleinen tapa hallita palveluja SaltStackissa.
+
+Tässä on esimerkki siitä, miten voit käyttää service.running -moduulia Apache-daemonin uudelleenkäynnistämiseen:
+
+restart_apache:
+  service.running:
+    - name: apache2
+    - enable: True
+    - watch:
+      - file: enable_new_virtualhost
+      - cmd: enable_new_virtualhost
+
+
+Tässä esimerkissä:
+
+    name: Määrittää palvelun nimen, joka käynnistetään uudelleen (esimerkiksi apache2).
+    enable: Asettaa True, jotta varmistetaan, että palvelu käynnistyy automaattisesti käynnistyksen yhteydessä.
+    watch: Määrittää tilat, jotka vaikuttavat siihen, milloin palvelu käynnistetään uudelleen. Tässä tapauksessa palvelu käynnistetään uudelleen, kun enable_new_virtualhost -tila on suoritettu.
+
+Tällä tavoin voit varmistaa, että Apache-daemoni käynnistetään uudelleen aina kun virtualhost-konfiguraatiota muutetaan tai uudelleenkäynnistetään.
+

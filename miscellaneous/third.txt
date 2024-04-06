@@ -1,0 +1,85 @@
+Kätyri:
+----------
+          ID: installation
+    Function: pkg.installed
+      Result: True
+     Comment: All specified packages are already installed
+     Started: 15:48:27.751429
+    Duration: 19.914 ms
+     Changes:
+----------
+          ID: daemon_check
+    Function: service.running
+        Name: apache2
+      Result: True
+     Comment: The service apache2 is already running
+     Started: 15:48:27.772258
+    Duration: 40.87 ms
+     Changes:
+----------
+          ID: create_dir_and_file
+    Function: file.managed
+        Name: /home/vagrant/testsite.example.com/index.html
+      Result: True
+     Comment: File /home/vagrant/testsite.example.com/index.html is in the correct state
+     Started: 15:48:27.816272
+    Duration: 31.156 ms
+     Changes:
+----------
+          ID: create_new_conf
+    Function: file.managed
+        Name: /etc/apache2/sites-available/testsite.conf
+      Result: True
+     Comment: File /etc/apache2/sites-available/testsite.conf is in the correct state
+     Started: 15:48:27.847534
+    Duration: 28.376 ms
+     Changes:
+----------
+          ID: enable_new_conf
+    Function: cmd.run
+        Name: a2ensite testsite.conf
+      Result: True
+     Comment: onlyif condition is false
+     Started: 15:48:27.876752
+    Duration: 298.28 ms
+     Changes:
+----------
+          ID: disable_old_conf
+    Function: cmd.run
+        Name: a2dissite 000-default.conf
+      Result: True
+     Comment: onlyif condition is false
+     Started: 15:48:28.175250
+    Duration: 14.423 ms
+     Changes:
+----------
+          ID: restart_apache
+    Function: service.running
+        Name: apache2
+      Result: True
+     Comment: The service apache2 is already running
+     Started: 15:48:28.190170
+    Duration: 17.003 ms
+     Changes:
+----------
+          ID: check_site
+    Function: http.query
+        Name: http://localhost
+      Result: True
+     Comment: Status 200 was found.
+                body: Hello world!
+
+                status: 200
+                text: Hello world!
+
+     Started: 15:48:28.207371
+    Duration: 4.865 ms
+     Changes:
+
+Summary for Kätyri
+------------
+Succeeded: 8
+Failed:    0
+------------
+Total states run:     8
+Total run time: 454.887 ms

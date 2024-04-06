@@ -1,0 +1,116 @@
+Kätyri:
+----------
+          ID: installation
+    Function: pkg.installed
+      Result: True
+     Comment: All specified packages are already installed
+     Started: 15:40:46.986171
+    Duration: 21.273 ms
+     Changes:
+----------
+          ID: daemon_check
+    Function: service.running
+        Name: apache2
+      Result: True
+     Comment: The service apache2 is already running
+     Started: 15:40:47.008926
+    Duration: 36.519 ms
+     Changes:
+----------
+          ID: create_dir_and_file
+    Function: file.managed
+        Name: /home/vagrant/testsite.example.com/index.html
+      Result: True
+     Comment: File /home/vagrant/testsite.example.com/index.html is in the correct state
+     Started: 15:40:47.047987
+    Duration: 26.545 ms
+     Changes:
+----------
+          ID: create_new_conf
+    Function: file.managed
+        Name: /etc/apache2/sites-available/testsite.conf
+      Result: True
+     Comment: File /etc/apache2/sites-available/testsite.conf is in the correct state
+     Started: 15:40:47.074675
+    Duration: 17.864 ms
+     Changes:
+----------
+          ID: enable_new_conf
+    Function: cmd.run
+        Name: a2ensite testsite.conf
+      Result: True
+     Comment: Command "a2ensite testsite.conf" run
+     Started: 15:40:47.093394
+    Duration: 34.653 ms
+     Changes:
+              ----------
+              pid:
+                  5324
+              retcode:
+                  0
+              stderr:
+              stdout:
+                  Enabling site testsite.
+                  To activate the new configuration, you need to run:
+                    systemctl reload apache2
+----------
+          ID: disable_old_conf
+    Function: cmd.run
+        Name: a2dissite 000-default.conf
+      Result: True
+     Comment: Command "a2dissite 000-default.conf" run
+     Started: 15:40:47.128926
+    Duration: 334.504 ms
+     Changes:
+              ----------
+              pid:
+                  5335
+              retcode:
+                  0
+              stderr:
+              stdout:
+                  Site 000-default disabled.
+                  To activate the new configuration, you need to run:
+                    systemctl reload apache2
+----------
+          ID: restart_apache
+    Function: service.running
+        Name: apache2
+      Result: True
+     Comment: Service restarted
+     Started: 15:40:47.481360
+    Duration: 88.762 ms
+     Changes:
+              ----------
+              apache2:
+                  True
+----------
+          ID: curl_site
+    Function: cmd.run
+        Name: curl localhost
+      Result: True
+     Comment: Command "curl localhost" run
+     Started: 15:40:47.570410
+    Duration: 16.887 ms
+     Changes:
+              ----------
+              pid:
+                  5414
+              retcode:
+                  0
+              stderr:
+                    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                                   Dload  Upload   Total   Spent    Left  Speed
+
+                    0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+                  100    13  100    13    0     0   6500      0 --:--:-- --:--:-- --:--:--  6500
+              stdout:
+                  Hello world!
+
+Summary for Kätyri
+------------
+Succeeded: 8 (changed=4)
+Failed:    0
+------------
+Total states run:     8
+Total run time: 577.007 ms

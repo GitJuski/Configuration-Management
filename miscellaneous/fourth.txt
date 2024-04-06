@@ -1,0 +1,122 @@
+Kätyri:
+----------
+          ID: installation
+    Function: pkg.installed
+      Result: True
+     Comment: The following packages were installed/updated: apache2
+     Started: 15:55:35.150928
+    Duration: 5251.341 ms
+     Changes:
+              ----------
+              apache2:
+                  ----------
+                  new:
+                      2.4.56-1~deb11u2
+                  old:
+----------
+          ID: daemon_check
+    Function: service.running
+        Name: apache2
+      Result: True
+     Comment: The service apache2 is already running
+     Started: 15:55:40.417277
+    Duration: 61.403 ms
+     Changes:
+----------
+          ID: create_dir_and_file
+    Function: file.managed
+        Name: /home/vagrant/testsite.example.com/index.html
+      Result: True
+     Comment: File /home/vagrant/testsite.example.com/index.html updated
+     Started: 15:55:40.482100
+    Duration: 5.97 ms
+     Changes:
+              ----------
+              diff:
+                  New file
+----------
+          ID: create_new_conf
+    Function: file.managed
+        Name: /etc/apache2/sites-available/testsite.conf
+      Result: True
+     Comment: File /etc/apache2/sites-available/testsite.conf updated
+     Started: 15:55:40.488168
+    Duration: 33.988 ms
+     Changes:
+              ----------
+              diff:
+                  New file
+              mode:
+                  0644
+----------
+          ID: enable_new_conf
+    Function: cmd.run
+        Name: a2ensite testsite.conf
+      Result: True
+     Comment: Command "a2ensite testsite.conf" run
+     Started: 15:55:40.524414
+    Duration: 991.019 ms
+     Changes:
+              ----------
+              pid:
+                  7666
+              retcode:
+                  0
+              stderr:
+              stdout:
+                  Enabling site testsite.
+                  To activate the new configuration, you need to run:
+                    systemctl reload apache2
+----------
+          ID: disable_old_conf
+    Function: cmd.run
+        Name: a2dissite 000-default.conf
+      Result: True
+     Comment: Command "a2dissite 000-default.conf" run
+     Started: 15:55:41.515651
+    Duration: 44.466 ms
+     Changes:
+              ----------
+              pid:
+                  7677
+              retcode:
+                  0
+              stderr:
+              stdout:
+                  Site 000-default disabled.
+                  To activate the new configuration, you need to run:
+                    systemctl reload apache2
+----------
+          ID: restart_apache
+    Function: service.running
+        Name: apache2
+      Result: True
+     Comment: Service restarted
+     Started: 15:55:41.579237
+    Duration: 111.993 ms
+     Changes:
+              ----------
+              apache2:
+                  True
+----------
+          ID: check_site
+    Function: http.query
+        Name: http://localhost
+      Result: True
+     Comment: Status 200 was found.
+                body: Hello world!
+
+                status: 200
+                text: Hello world!
+
+     Started: 15:55:41.691489
+    Duration: 9.895 ms
+     Changes:
+
+Summary for Kätyri
+------------
+Succeeded: 8 (changed=6)
+Failed:    0
+------------
+Total states run:     8
+Total run time:   6.510 s
