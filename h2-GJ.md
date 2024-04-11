@@ -387,7 +387,7 @@ I went ahead to test it.
 
 ![1](screenshots/2/64.png)
 
-Then I deleted Apache, removed some directories and files. I did it to test my IaC from a clean sleet.
+Then I deleted Apache, removed some directories and files. I did it to test my IaC from a clean slate.
 
 ![1](screenshots/2/65.png)
 
