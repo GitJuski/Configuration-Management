@@ -1,0 +1,91 @@
+vagrant@bullseye:/srv/salt/apache_server$ sudo salt-call --local state.apply apache_server
+local:
+----------
+          ID: install
+    Function: pkg.installed
+        Name: apache2
+      Result: True
+     Comment: The following packages were installed/updated: apache2
+     Started: 13:24:36.021415
+    Duration: 5343.379 ms
+     Changes:
+              ----------
+              apache2:
+                  ----------
+                  new:
+                      2.4.59-1~deb11u1
+                  old:
+----------
+          ID: dir_and_file
+    Function: file.managed
+        Name: /home/vagrant/website/index.html
+      Result: True
+     Comment: File /home/vagrant/website/index.html updated
+     Started: 13:24:41.368328
+    Duration: 5.844 ms
+     Changes:
+              ----------
+              diff:
+                  New file
+              group:
+                  vagrant
+              user:
+                  vagrant
+----------
+          ID: siteconf
+    Function: file.managed
+        Name: /etc/apache2/sites-available/awebsite.conf
+      Result: True
+     Comment: File /etc/apache2/sites-available/awebsite.conf updated
+     Started: 13:24:41.374262
+    Duration: 17.629 ms
+     Changes:
+              ----------
+              diff:
+                  New file
+              mode:
+                  0644
+----------
+          ID: disable
+    Function: file.absent
+        Name: /etc/apache2/sites-enabled/000-default.conf
+      Result: True
+     Comment: Removed file /etc/apache2/sites-enabled/000-default.conf
+     Started: 13:24:41.391982
+    Duration: 0.762 ms
+     Changes:
+              ----------
+              removed:
+                  /etc/apache2/sites-enabled/000-default.conf
+----------
+          ID: enable
+    Function: file.symlink
+        Name: /etc/apache2/sites-enabled/awebsite.conf
+      Result: True
+     Comment: Created new symlink /etc/apache2/sites-enabled/awebsite.conf -> ../sites-available/awebsite.conf
+     Started: 13:24:41.392818
+    Duration: 6.286 ms
+     Changes:
+              ----------
+              new:
+                  /etc/apache2/sites-enabled/awebsite.conf
+----------
+          ID: check
+    Function: service.running
+        Name: apache2
+      Result: True
+     Comment: Service restarted
+     Started: 13:24:41.440412
+    Duration: 849.799 ms
+     Changes:
+              ----------
+              apache2:
+                  True
+
+Summary for local
+------------
+Succeeded: 6 (changed=6)
+Failed:    0
+------------
+Total states run:     6
+Total run time:   6.224 s
