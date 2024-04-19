@@ -1,0 +1,102 @@
+vagrant@bullseye:/srv/salt/caddy_server$ sudo salt-call --local state.apply caddy_server
+local:
+----------
+          ID: InstallParts
+    Function: pkg.installed
+      Result: True
+     Comment: The following packages were installed/updated: curl
+              The following packages were already installed: debian-keyring, debian-archive-keyring, apt-transport-https
+     Started: 09:51:10.931070
+    Duration: 6260.12 ms
+     Changes:
+              ----------
+              curl:
+                  ----------
+                  new:
+                      7.74.0-1.3+deb11u11
+                  old:
+----------
+          ID: GetRepo
+    Function: pkgrepo.managed
+        Name: deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+      Result: True
+     Comment: Configured package repo 'deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main'
+     Started: 09:51:17.214847
+    Duration: 5719.689 ms
+     Changes:
+              ----------
+              repo:
+                  deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+----------
+          ID: Install
+    Function: pkg.installed
+        Name: caddy
+      Result: True
+     Comment: The following packages were installed/updated: caddy
+     Started: 09:51:22.937361
+    Duration: 6854.815 ms
+     Changes:
+              ----------
+              caddy:
+                  ----------
+                  new:
+                      2.7.6
+                  old:
+----------
+          ID: dir_and_file
+    Function: file.managed
+        Name: /home/vagrant/website/index.html
+      Result: True
+     Comment: File /home/vagrant/website/index.html updated
+     Started: 09:51:29.800846
+    Duration: 25.08 ms
+     Changes:
+              ----------
+              diff:
+                  New file
+              group:
+                  vagrant
+              user:
+                  vagrant
+----------
+          ID: Config
+    Function: file.managed
+        Name: /etc/caddy/Caddyfile
+      Result: True
+     Comment: File /etc/caddy/Caddyfile updated
+     Started: 09:51:29.826109
+    Duration: 24.756 ms
+     Changes:
+              ----------
+              diff:
+                  ---
+                  +++
+                  @@ -10,7 +10,7 @@
+
+                   :80 {
+                        # Set this path to your site's directory.
+                  -     root * /usr/share/caddy
+                  +     root * /home/vagrant/website
+
+                        # Enable the static file server.
+                        file_server
+----------
+          ID: Check
+    Function: service.running
+        Name: caddy
+      Result: True
+     Comment: Service restarted
+     Started: 09:51:29.983894
+    Duration: 2395.456 ms
+     Changes:
+              ----------
+              caddy:
+                  True
+
+Summary for local
+------------
+Succeeded: 6 (changed=6)
+Failed:    0
+------------
+Total states run:     6
+Total run time:  21.280 s
