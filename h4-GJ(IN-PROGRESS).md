@@ -8,6 +8,8 @@ This is the report for homework assignment number four. The assignment is divide
 
     - Salt overview, parts Rules of YAML, YAML simple structure and Lists and dictionaries - YAML block structures by Salt contributors.
 
+    - Pkg-File-Service – Control Daemons with Salt – Change SSH Server Port by Karvinen 2018.
+
     - state docs for pkg, file and service. The homework directive states that a glance through is sufficient.
 
 - Task a. Hello sls! Create a hello world state by writing it into a text file.
@@ -33,17 +35,134 @@ This is the report for homework assignment number four. The assignment is divide
 
 # Written tasks (Task x)
 
-## automatically provision one master and two slaves
+## automatically provision one master and two slaves parts Infra as Code - Your wishes as a text file and top.sls - What Slave Runs What States.
 
-COMING SOON...
+### Infra as Code - Your wishes as a text file
+
+- Create a module inside /srv/salt/ with `sudo mkdir -p /srv/salt/hello`.
+- Create an init.sls inside the module with `sudoedit /srv/salt/hello/init.sls`.
+- Uses YAML syntax which uses two spaces to indent instead of tabs.
+- An example:
+
+      /tmp/infra-as-code:
+        file.managed
+
+- Apply the state with `sudo salt '*' state.apply hello`.
+
+### top.sls - What Slave Runs What States
+
+- Using the top file you can specify which states are applied by which slaves.
+- Create the top file with `sudoedit /srv/salt/top.sls`
+- Add the following:
+
+      base:
+        '*':
+          - hello
+
+- Apply the states with `sudo salt '*' state.apply`.
+
+
+(Karvinen 2023)
 
 ## Salt overview, parts Rules of YAML, YAML simple structure and Lists and dictionaries
 
-COMING SOON...
+### Rules of YAML
+
+- The basic rules of YAML:
+    - Data is structured in key: value pairs.
+    - colon and on space marks a key: value pair.
+    - The value can be in different structures.
+    - All keys/properties are case-sensitive.
+    - Use spaces to indent. Tabs are not allowed.
+    - Comments begin with `#`.
+
+### simple structure
+
+- YAML consists of three element types.
+    1. Scalars -> key: value mappings. Example:
+
+      fruit: apples
+
+    2. Lists -> A list of value for a key. Example:
+
+      fruits:
+        - appless
+        - oranges
+
+    3. Dictionaries -> A collection of key: value mappings and lists. Example:
+
+      dinner:
+        drinks: sparkling water
+        entree:
+          - steak
+          - mashed potatoes
+
+### Lists and dictionaries
+
+- YAML is organized into block structures.
+- Indentation is important. Two spaces is the standard.
+- a hyphen and a space indicates list values.
+
+(Saltproject s.a.)
+
+
+## Pkg-File-Service – Control Daemons with Salt – Change SSH Server Port
+
+- Create an sshd state and copy the sshd config. Example of the contents:
+
+      openssh-server:
+        pkg.installed
+      /etc/ssh/sshd_config:
+        file.managed:
+          - source: salt://sshd_config
+      sshd:
+        service.running:
+          - watch:
+            - file: /etc/ssh/sshd_config
+
+- Open the copied config and remove the `#` and change the port number.
+- Apply the state with `sudo salt '*' state.apply sshd`.
+- Test it with a slave machine. `nc -vz [target] [port number]` or `ssh -p [port number] [user]@[domain]`
+
+(Karvinen 2018)
+
 
 ## pkg, file and service
 
-COMING SOON...
+### pkg
+
+- Handless packages using OS package manages such as yum or apt-get.
+- Packages can be installed, removed and purged.
+- pkg.installed -> a state where a desired package is installed and updated. A desired version can also be given.
+- pkgs -> Define multiple packages. The following example ensures that packages tree, curl and cowsay are installed. 
+
+      packages:
+        pkg.installed:
+          - pkgs:
+            - tree
+            - curl
+            - cowsay
+
+- pkg.purged -> a state where the defined package not installed or purged.
+- A certain version can be defined. pkg.purged won't purge other versions not defined.
+
+### file
+
+- state.file is for different types of file manipulation. regular files, special files, directories and symlinks.
+- file.managed manages a file to be in a certai state. For example a state where a file named test in inside the home directory and is owned by the user and the user group with certain contents.
+- The file can be given a source for the contents. This is particularly useful when defining configuration files.
+- file.absent makes sure that the named file or directory is absent or deleted.
+- file.symlink makes sure that a defined symlink is present or created. It needs the path where the symlink resides and the target.
+
+### service
+
+- Ways to control services.
+- service.running ensures that the defined service is running. name, enable, wait are a couple of options you can give.
+- service.dead ensures that the defined service is dead. If the service is running, this state will stop it. This is pretty much the opposite of service.running.
+- The option "enable" can be given to manipulate on how the service behaves at boot time. If enable is set to True, the service is enabled at boot. If enable is set to False, the service is disabled at boot. The default is None. `enable: True` and `enable: False`.
+
+(Salt state docs s.a.)
+
 
 # Practical tasks
 
@@ -467,9 +586,17 @@ Caddy Documentation. s.a. Install. Available at https://caddyserver.com/docs/ins
 
 Karvinen, T. 2024. Infra as Code - Palvelinten hallinta 2024. Available at https://terokarvinen.com/2024/configuration-management-2024-spring/.
 
+Karvinen, T. 2023. Salt Vagrant - automatically provision one master and two slaves. Available at https://terokarvinen.com/2023/salt-vagrant/#infra-as-code---your-wishes-as-a-text-file. Read on April 20, 2024.
+
+Karvinen, T. 2018. Pkg-File-Service – Control Daemons with Salt – Change SSH Server Port. Available at https://terokarvinen.com/2018/04/03/pkg-file-service-control-daemons-with-salt-change-ssh-server-port/?fromSearch=karvinen%20salt%20ssh. Read on April 20, 2024.
+
 Karvinen, T. April 17, 2024. Lecture.
 
 Reddit. Question asked on July 16, 2021 by thoughtful-curious. Answer I used as a reference given on July 17, 2021 by contherad. Available at https://www.reddit.com/r/saltstack/comments/olov2m/install_caddy_using_saltstack/. Read on April 19, 2024.
+
+Saltproject. s.a. Salt overview. Available at https://docs.saltproject.io/salt/user-guide/en/latest/topics/overview.html#rules-of-yaml. Read on April 20, 2024.
+
+Salt state docs. pkg, file and service. Available with commands sudo salt-call --local sys.state_doc pkg, sudo salt-call --local sys.state_doc file and sudo salt-call --local sys.state_doc service. Read on April 20, 2024.
 
 Serverfault. Question asked on September 5, 2012 by HXH. Answer I used as a reference given on September 5, 2012 by pkhamre. Nginx enable site command. Available at https://serverfault.com/questions/424452/nginx-enable-site-command. Read on April 19, 2024.
 
