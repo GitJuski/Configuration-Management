@@ -108,11 +108,137 @@ I was done at 6:48 PM.
 
 ## Task d. Find.
 
-COMING SOON...
+On April 26, 2024 at 11:33 AM I continued.
+
+I opened Powershell by clicking the icon on my taskbar. I used `cd vagrant/bullseye` to change directories to my bullseye machine's dir. Then I created a machine with `vagrant up`. I kept resetting the connection a couple of times. After a couple of minutes it was ready. I connected with `vagrant ssh`.
+
+Here I checked the home directory (Karvinen 2024). I decided to use sudo with the find commands to make sure that everything shows up.
+
+![1](screenshots/5/10.png)
+
+Here I checked the changes in /etc/ (Karvinen 2024). I forwarded the ouput into a file so that I could read it later. 
+
+![1](screenshots/5/11.png)
+
+Here I opened the manual page for find with `man find`. I searched for a specific string by opening the serch with `/` and typing -printf.
+
+![1](screenshots/5/12.png)
+
+This is the %T line.
+
+![1](screenshots/5/13.png)
+
+This is the %p line.
+
+![1](screenshots/5/14.png)
+
+I checked the sort command with `man sort`
+
+![1](screenshots/5/15.png)
+
+Here are some experimentations. The first command is without the sort. The second one is the full command I borrowed from Tero (Karvinen 2024). The last command is without sort and without the newline `\n`.
+
+![1](screenshots/5/16.png)
+
+Here I checked the last lines from the output.txt with `less output.txt`.
+
+![1](screenshots/5/17.png)
+
+I was done at 11:43 AM.
+
+I decided to continue the research. Here I found a line that describes the %T better.
+
+![1](screenshots/5/18.png)
+
+Here's some more experimentations.
+
+![1](screenshots/5/19.png)
+
+The %T needs the +. So, I did some more experimentations.
+
+![1](screenshots/5/20.png)
+
+So, my conclusion is this:
+
+- find -> finds something in a specified directory/directories
+- -printf -> formats the output by users choices.
+- %T+ -> this is the first choice. Formats the print by last modified time with the year/month/date/time
+- %p -> formats the print to show the filename. \n formats every print to go on their own line.
+- sort -> sorts the output to be timely correct.
 
 ## Task e. Command.
 
-COMING SOON...
+I started at 12:27 PM. 
+
+First, I did some groundwork. 
+
+1. `sudo apt update && sudo apt upgrade -y`
+2. `sudo apt install ufw`
+3. `sudo ufw allow 22/tcp && sudo ufw allow`
+4. `sudo apt install salt-minion`
+5. `sudo mkdir -p /srv/salt/command`
+6. `cd /srv/salt/command/`
+7. `sudo apt install micro -y`
+8. `export EDITOR=micro`
+9. `sudoedit komento`
+
+![1](screenshots/5/21.png)
+
+Then I created an init.sls with `sudoedit init.sls`. I created a state that creates a directory and a state that creates a file. The directory and the file are in home directory which is why I made sure that they are owned by vagrant and not root. I checked the file permission numbers from a geeksforgeeks post (2024). I don't use numbers when changing permissions, so I had to check them out. I usually use letters instead. number 755 gives '-rwxr-xr-x' permissions to the file (Geeksforgeeks 2024). User: rwx, Group: rx and Others: rx. 711 would give '-rwx--x--x' permissions (GeeksforGeeks 2024). The leading - means that the target is a file. If it were a directory then it would look like this 'drwx--x--x'.  
+
+![1](screenshots/5/22.png)
+
+The test worked.
+
+![1](screenshots/5/23.png)
+
+I checked the permissions and tested the command.
+
+![1](screenshots/5/24.png)
+
+I opened the init.sls with `sudoedit init.sls`. Then I added a new state where the command is made global. Now, the two states before this one are completely optional. The command can be added straight to the /usr/local/bin/ directory. If you want to have a directory of the command in the home directory, then this is the way. This method follows the manual workflow we've been teached. Which goes like this:
+
+1. Create a script.
+2. Assign correct permissions
+3. Test it
+4. Copy it over to /usr/local/bin/
+5. Test it
+
+![1](screenshots/5/25.png)
+
+Then I tested it. It created the file with wrong permission since I didn't specify the correct permissions.
+
+![1](screenshots/5/26.png)
+
+The command doesn't work since I don't have execute permissions.
+
+![1](screenshots/5/27.png)
+
+I opened the init.sls and specified better permissions.
+
+![1](screenshots/5/28.png)
+
+I applied the state once more with `sudo salt-call --local state.apply command`. Then I tested the command and it worked.
+
+![1](screenshots/5/29.png)
+
+I created a new source with `sudoedit jees`. I opened the init.sls with `sudoedit init.sls` and removed everything except the last state. I made a couple of changes.
+
+![1](screenshots/5/30.png)
+
+I applied the state and tested it succesfully. Here's the command.
+
+![1](screenshots/5/31.png)
+
+And that's how the command can be created in a single state.
+
+I was done at 12:45 PM.
+
+I decided to test the commands with another user. I created a new user with `sudo adduser testiukko`. I created a password and hit enter multiple times.
+
+I switched to the new user with `sudo su testiukko`. I used sudo so that I didn't need to type the password. I tested the commands and deleted the user.
+
+![1](screenshots/5/32.png)
 
 ## Optional: GUI.
 
@@ -123,6 +249,8 @@ COMING SOON...
 COMING SOON...
 
 # References
+
+Geeksforgeeks. 2024. How to Set File Permissions in Linux. The "octal notations" image. Available at https://www.geeksforgeeks.org/permissions-in-linux/. Read on April 26, 2024.
 
 Karvinen, T. 2024. Infra as Code - Palvelinten hallinta 2024. Available at https://terokarvinen.com/2024/configuration-management-2024-spring/.
 
