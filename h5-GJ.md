@@ -22,9 +22,21 @@ This is the report for homework assignment number five. As per usual, this assig
 
 # The Written task
 
-## Task x. COMING SOON...
+## Task x. "Using Salt with Windows" a report by Tuomas Valkamo
 
-COMING SOON...
+- Create a module and an init.sls file. Valkamo's (2022) way of doing it:
+
+      cd C:\users\valka\salt\hello-windows
+      New-Item -Path '.\init.sls' -ItemType File
+
+- Create the state like Tuomas (Valkamo 2022) did:
+
+      C:/Users/valka/tmp/suolaikkuna.txt:
+        file.managed
+
+- Test that it works. `salt-call --file-root=C:\Users\valka\salt --local state.apply hello-windows` and check that it produced the expected results. (Valkamo 2022)
+
+- Gather technical information with `salt-call --local grains.items > tech-info.txt`. This writes the info into a txt file. To format it as JSON, use `salt-call --local grains.items --out=json > tech-info.txt`. (Valkamo 2022)
 
 # Practical tasks
 
@@ -422,6 +434,8 @@ Saltproject. March 6, 2024. Salt 3007.0 release notes. Available at https://docs
 Saltproject. s.a. Debian. Available at https://docs.saltproject.io/salt/install-guide/en/latest/topics/install-by-operating-system/debian.html. Read on April 27, 2024.
 
 Saltproject. 2024. salt.states.file. Available at https://docs.saltproject.io/en/latest/ref/states/all/salt.states.file.html. Read on April 26, 2024.
+
+Valkamo, T. 2022. Using Salt with Windows. Available at https://tuomasvalkamo.com/CMS-course/week-5/. Read on April 29, 2024.
 
 Wikipedia. Edited on April 2, 2024. Windows-1252. Available at https://en.wikipedia.org/wiki/Windows-1252. Read on April 25, 2024.
 
