@@ -146,6 +146,70 @@ The whole task x's reference (Saltproject 2024)
 
 # Task a. pkg in Windows.
 
+## Essential information
+
+I used a different computer than I normally use. Here's the specs:
+
+![1](screenshots/6/1.PNG)
+
+In addition to this, I had 142 GB of free space in my SSD, I was at home in Vaasa and I used a good wireless connection.
+
+I started this on May 3, 2024 at 4:38 PM.
+
+I opened PowerShell in administrator mode by right clicking the icon on my taskbar and selecting 'run as administrator'. Then I created a new directory which I didn't even use in this task.
+
+![1](screenshots/6/2.PNG)
+
+I cloned and updated the winrepo, and after those procedures I installed Wireshark (Saltstack 2024).
+
+![1](screenshots/6/3.PNG)
+
+Then I tried `salt-call --local pkg.list_pkgs` (Saltproject 2024). The list was longish so I took a screenshot that shows the newly installed Wireshark.
+
+![1](screenshots/6/4.PNG)
+
+Then I wanted to check the available versions for curl (Saltproject 2024).
+
+![1](screenshots/6/5.PNG)
+
+I tried pkg.installed to verify idempotence. pkg.installed wasn't available, so I was bamboozled. I decided to move on.
+
+![1](screenshots/6/6.PNG)
+
+I remember reading that this "package manager" solution doesn't manage dependecies or additional needed tools. I surffed to check the tools that Wireshark needed to work. Without npcap capturing live traffic is not possible (Wireshark s.a). I remember seeing npcap before since I've installed Wireshark some time ago.
+
+![1](screenshots/6/7.PNG)
+
+I decided to check if the winrepo had npcap, but they had winpcap instead.
+
+![1](screenshots/6/8.PNG)
+
+I googled and found a question people asked and the answer to said question.
+
+![1](screenshots/6/9.PNG)
+
+I opened the Wireshark page from before and opened the link to npcap's site. There I scrolled down to downloads and downloaded the installer for Windows.
+
+![1](screenshots/6/10.PNG)
+
+I did the install by clicking next a couple of times. Then I manually searched for the Wireshark.exe since I completely forgot that the Windows search function exists.
+
+![1](screenshots/6/11.PNG)
+
+I opened the application and found out that there's an update. Huh..? I thought that Salt installed the newest version. Later on I checked the versions available with `salt-call --local pkg.list_available wireshark`. Version 3.2.2 was the latest available in the repo. The latest version of Wireshark was version 4.2.4 at the time writing this.
+
+![1](screenshots/6/12.PNG)
+
+Anyways, I clicked on 'remind me later' since I removed Wireshark later. This was the outlook.
+
+![1](screenshots/6/13.PNG)
+
+Then I removed Wireshark (Saltproject 2024) and checked that it wasn't in program files anymore.
+
+![1](screenshots/6/14.PNG)
+
+I was done at 4:57 PM.
+
 # Task b. Benchmark.
 
 ## Vagrantgoat by Aatu Horelli https://github.com/aatuhorelli/vagrantgoat/
@@ -259,3 +323,7 @@ Linsen, S. 2022. LAMP. Available at https://github.com/SariLinsen/LAMP/. Read on
 Sailaranta, J. 2021. OfficeSetup. Available at https://github.com/jakesailaranta/OfficeSetup/. Read on May 2, 2024.
 
 Saltproject. 2024. Windows Package Manager. Available at https://docs.saltproject.io/en/latest/topics/windows/windows-package-manager.html#usage. Read on May 2, 2024.
+
+Wireshark. s.a. Installing Wireshark under Windows. Chapter 2. Building and Installing Wireshark. Available at https://www.wireshark.org/docs/wsug_html_chunked/ChBuildInstallWinInstall.html. Read on May 3, 2024.
+
+Wireshark. 2020. WinPcap. Available at https://wiki.wireshark.org/WinPcap. Read on May 3, 2024.
