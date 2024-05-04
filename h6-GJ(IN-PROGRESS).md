@@ -231,7 +231,7 @@ I was done at 4:57 PM.
 - Dependencies/Requirements:
 
     - Host machine -> A Linux machine.
-    - Tools to have on Host -> Vagrant (VirtualBox), wget and salt-master
+    - Tools needed on Host -> Vagrant (VirtualBox), wget and salt-master
     - Environment -> Local
     - Need to manually adjust IP addresses to make it work
 
@@ -243,7 +243,7 @@ I was done at 4:57 PM.
 
 ## LAMP by Sari Linsen https://github.com/SariLinsen/LAMP/
 
-- Business purpose -> Installs Apache, MariaDB and Python and changes the default page of Apache2. This creates an environment for practice and development purposes at home. In production use, the webserver and database shouldn't be hosted in the same machine.
+- Business purpose -> Installs Apache, MariaDB and Python, and changes the default page of Apache2. This creates an environment for practice and development purposes at home. In production use, the webserver and database shouldn't be hosted in the same machine.
 
 - License:
 
@@ -260,16 +260,16 @@ I was done at 4:57 PM.
 - Dependencies/Requirements:
 
     - Platform -> The packages/tools will be installed on the machine in use. A virtual machine is recommended. If you want to utilize script.sh, then you should use a Linux machine and preferably a VM. To use this on a Windows machine, you need to manually do the installations etc.
-    - Tools to have before -> (Virtualization tools) and On Windows you should have git and salt-minion.
+    - Tools needed before -> (Virtualization tools) and On Windows you should have git and salt-minion.
     - Environment -> local, a vm in the cloud (IaaS).
 
 - Interesting -> The end result is good for testing and practice.
 
-- Other notes -> The module doesn't utilize master-slave architecture. This applies the module's changes to the machine you are currently working on.
+- Other notes -> The module doesn't utilize master-slave architecture. Instead, it applies changes directly to the machine you are currently working on.
 
 ## OfficeSetup by Jaakko Sailaranta https://github.com/jakesailaranta/OfficeSetup/
 
-- Business purpose -> Configures a master-slave architecture between different types of minions with essential and useful tools. Development, Media and Webserver.
+- Business purpose -> Configures a master-slave architecture among different types of minions with essential and useful tools. Development, Media and Webserver.
 
 - License:
 
@@ -286,9 +286,9 @@ I was done at 4:57 PM.
 - Dependencies/Requirements:
 
     - Platform -> Master OS must be a Linux distro. Minion OS can be either Windows or Linux.
-    - Tools to have before: 
+    - Tools needed before: 
         - Salt-minion must be installed and configured on all minion machines.
-        - On Windows minion, the following firewall rules must be enabled: File and Printer Sharing (Echo Request - ICMPv4-In). 
+        - On a Windows minion, the following firewall rules must be enabled: File and Printer Sharing (Echo Request - ICMPv4-In). 
         - Git
     - Environment -> Local, Should work with machines in the cloud as well.
 
@@ -296,7 +296,65 @@ I was done at 4:57 PM.
 
 - Other notes -> The module is big with essential configurations from software installation to a more fine-tuned approach with wallpaper changes and quality of life enhancements.
 
+## Moduuli by Aatu Alanen https://github.com/Suoladgl/Moduuli
+
+- Business purpose -> Creates a Teamspeak user, installs a Teamspeak server, automatically accepts terms and starts the server.
+
+- License:
+
+    - License name -> GNU General Public License v3.0
+    - Where located -> https://github.com/Suoladgl/Moduuli/blob/main/LICENSE
+    - juridical effects:
+
+        - Permissions -> Commercial use, Modification, Distribution, Patent use and Private use
+
+        - Limitations -> Liability and Warranty
+
+- Creator and year created -> Aatu Alanen (Suoladgl), 2020
+
+- Dependencies/Requirements:
+
+    - Platform -> The module was created/tested using Xubuntu-18.04. and it assumes that you are using this specific distribution and version.
+    - Tools needed before: 
+        - salt installed and configured
+        
+    - Environment -> Local, Could work with machines in the cloud if the module is compatible with other distros or if the expected distro is available.
+
+- Interesting -> I haven't heard of Teamspeak in a long time, so this caught my attention. I also ran into a new state that I've not seen before and I tought that it was pretty cool. The state in question was archive.extracted.
+
+- Other notes -> I presume the module isn't really up to date. This would make some modifications necessary for it to work. All in all, I found the concept intriguing.
+
+## Saltpress by Roope Varttila https://github.com/sadboirick/saltpress
+
+- Business purpose -> Installs Wordpress and its requirements. Great for trying out different Wordpress functionalities.
+
+- License:
+
+    - License name -> GNU General Public License v3.0
+    - Where located -> https://github.com/sadboirick/saltpress/blob/master/LICENSE
+    - juridical effects:
+
+        - Permissions -> Commercial use, Modification, Distribution, Patent use and Private use
+
+        - Limitations -> Liability and Warranty
+
+- Creator and year created -> Roope Varttila (sadboirick), 2018
+
+- Dependencies/Requirements:
+
+    - Platform -> A linux machine. Tested on Xubuntu 16.04.4 LTS x64 live-usb.
+    - Tools needed before: 
+        - Git
+        
+    - Environment -> Local and why not a cloud vm as well
+
+- Interesting -> Very "cleanly" made, meaning that the entire module is easy to read through and understand its contents. It's an insteresting outcome and good for testing.
+
+- Other notes -> Nothing to add really
+
 # Task c. Testbench.
+
+COMING SOON...
 
 # Task d. Five ideas.
 
@@ -314,6 +372,8 @@ Innovation isn't really one of my strong suits. Most projects I start are way ou
 
 # References
 
+Alanen, A. 2020. Moduuli. Available at https://github.com/Suoladgl/Moduuli. Read on May 4, 2024.
+
 Horelli, A. 2023. Vagrantgoat. Available at https://github.com/aatuhorelli/vagrantgoat/. Read on May 2, 2024.
 
 Karvinen, T. 2024. Infra as Code - Palvelinten hallinta 2024. Available at https://terokarvinen.com/2024/configuration-management-2024-spring/.
@@ -323,6 +383,8 @@ Linsen, S. 2022. LAMP. Available at https://github.com/SariLinsen/LAMP/. Read on
 Sailaranta, J. 2021. OfficeSetup. Available at https://github.com/jakesailaranta/OfficeSetup/. Read on May 2, 2024.
 
 Saltproject. 2024. Windows Package Manager. Available at https://docs.saltproject.io/en/latest/topics/windows/windows-package-manager.html#usage. Read on May 2, 2024.
+
+Varttila, R. 2018. Saltpress. Available at https://github.com/sadboirick/saltpress. Read on May 4, 2024.
 
 Wireshark. s.a. Installing Wireshark under Windows. Chapter 2. Building and Installing Wireshark. Available at https://www.wireshark.org/docs/wsug_html_chunked/ChBuildInstallWinInstall.html. Read on May 3, 2024.
 
