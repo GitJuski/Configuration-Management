@@ -354,7 +354,99 @@ I was done at 4:57 PM.
 
 # Task c. Testbench.
 
-COMING SOON...
+In this task, I was supposed to choose a module presented in the previous task and run it. I chose Roope's module Saltpress. The reason I chose this is because I've never done anything related to Wordpress, and I found the module to be interesting. I thought that this would be a great opportunity to see how Wordpress behaves.
+
+### Checking the code
+
+The module consists of four submodules, one shell script and one top.sls file.
+
+![1](screenshots/6/15.PNG)
+
+This seems to be the only part where something is downloaded from outside the package manager.
+
+![1](screenshots/6/16.PNG)
+
+I googled a bit and checked WordPress URLs in VirusTotal. Seems like wordpress.org is a reputable site. Another one you may run into is wordpress.com. The difference is that wordpress.com is fully managed, while wordpress.org is self hosted, meaning that the software need to be downloaded from wordpress.org and managed by yourself.
+
+I looked around wordpress.org to find something related to the tarball. It wasn't too straightforward to find this, but I found this guide that instructs on using the same command. With this in mind, I'd like to say that this is a reputable source.
+
+![1](screenshots/6/17.PNG)
+
+## Trying the module
+
+I decided to configure a new VM and not use Vagrant for this. I didn't include the steps here since a report on it can be found in my Linux course's repository https://github.com/GitJuski/Linux-servers/blob/main/h1-GJ.md#installing-debian-on-virtualbox-report.
+
+Here's the specs:
+
+![1](screenshots/6/18.PNG)
+
+I started testing this module on May 5, 2024 at 12:05 PM. I used the same host machine as in the other task earlier on. I installed git and micro with `sudo apt install git micro`. Then I created a new directory and cloned the module there.
+
+![1](screenshots/6/19.PNG)
+
+At this point I remembered that Debian 11 doesn't have MySQL in their repo. I didn't know about the situation in Debian 12, so I tested installing it.
+
+![1](screenshots/6/20.PNG)
+
+Then I downloaded a MySQL apt repo setup (Jetha, Boucheron & Ellingwood 2022). I replaced the package with the newest one and followed the guide to go proceed. The process was much simpler than I thought, and I've could have managed without the guide.
+
+![1](screenshots/6/21.PNG)
+
+![1](screenshots/6/22.PNG)
+
+Here's the added repos.
+
+![1](screenshots/6/23.PNG)
+
+Then I tried to run the script but errors popped up. One of them was caused by salt. Of course Debian 12 didn't have the salt repo, and I didn't remember this since I've only recently used Debian 11. So, I added the repo (Saltproject s.a). Another error was caused by the fact that I didn't have /var/www/. I installed Apache manually `sudo apt install apache2` although the module should install it. 
+
+![1](screenshots/6/24.PNG)
+
+Then I tried it again `sudo ./saltpress.sh`. Everything else went okay except the mysql_query states.
+
+![1](screenshots/6/25.PNG)
+
+I checked localhost.
+
+![1](screenshots/6/26.PNG)
+
+Then I tried to find a fix. I installed some parts and I googled a bit. I didn't have any motivation at that time so I dropped it. I just had a long fight with another database a few days ago, so I was done fixing anything related to databases at the time.
+
+I was done at 12:40 PM.
+
+I checked the Moduuli by Aatu Alanen next. I researched the source of the tarball the module downloads. Unfortunately, the site is no longer available. The Teamspeak server can be downloaded from teamspeak.com.
+
+Then I decided to dig up my old laptop that had ubuntu as the host OS to test the Vagrantgoat by Aatu Horelli. After spending a long time updating, upgrading, attempting to get Virtualbox to work, trying to sign and enroll MOK, and encountering other inconveniences, I decided to abandon this task as well. At this point, this report has taken up far too much of my time.
+
+Last try. I tested the LAMP module by Sari. First, I created a new vagrant machine (Debian 11). The module doesn't download anything outside the package manager.
+
+### Testing
+
+Fogot to check the starting time, but I was done at 2:57 PM. 
+
+First things first.
+
+![1](screenshots/6/27.PNG)
+
+Then following Sari's directives.
+
+![1](screenshots/6/28.PNG)
+
+It worked!
+
+![1](screenshots/6/29.PNG)
+
+Localhost looks good.
+
+![1](screenshots/6/30.PNG)
+
+I checked out the python script.
+
+![1](screenshots/6/31.PNG)
+
+And of course at the time of writing this, I remembered that there was supposed to be a database installed as well. I had already destroyed the machine, so I did everything again to see the end results. It works!
+
+![1](screenshots/6/32.PNG)
 
 # Task d. Five ideas.
 
@@ -376,6 +468,8 @@ Alanen, A. 2020. Moduuli. Available at https://github.com/Suoladgl/Moduuli. Read
 
 Horelli, A. 2023. Vagrantgoat. Available at https://github.com/aatuhorelli/vagrantgoat/. Read on May 2, 2024.
 
+Jetha, H., Boucheron, B. & Ellingwood, J. 2022. How To Install the Latest MySQL on Debian 10. Available at https://www.digitalocean.com/community/tutorials/how-to-install-the-latest-mysql-on-debian-10. Read on May 5, 2024.
+
 Karvinen, T. 2024. Infra as Code - Palvelinten hallinta 2024. Available at https://terokarvinen.com/2024/configuration-management-2024-spring/.
 
 Linsen, S. 2022. LAMP. Available at https://github.com/SariLinsen/LAMP/. Read on May 2, 2024.
@@ -383,6 +477,8 @@ Linsen, S. 2022. LAMP. Available at https://github.com/SariLinsen/LAMP/. Read on
 Sailaranta, J. 2021. OfficeSetup. Available at https://github.com/jakesailaranta/OfficeSetup/. Read on May 2, 2024.
 
 Saltproject. 2024. Windows Package Manager. Available at https://docs.saltproject.io/en/latest/topics/windows/windows-package-manager.html#usage. Read on May 2, 2024.
+
+Saltproject. s.a. Install Salt on Debian 12 (Bookworm) amd64. Available at https://docs.saltproject.io/salt/install-guide/en/latest/topics/install-by-operating-system/debian.html#install-salt-on-debian-12-bookworm-amd64. Read on May 5, 2024.
 
 Varttila, R. 2018. Saltpress. Available at https://github.com/sadboirick/saltpress. Read on May 4, 2024.
 
